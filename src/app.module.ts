@@ -5,8 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './typeorm/entities/User';
 import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
-import { AuthService } from './auth/auth.service';
-import { AuthController } from './auth/auth.controller';
+import { Token } from './typeorm/entities/Token';
 
 @Module({
   imports: [
@@ -20,7 +19,7 @@ import { AuthController } from './auth/auth.controller';
       username: 'root',
       password: 'Ola__987',
       database: 'network_db',
-      entities: [User],
+      entities: [User, Token],
       synchronize: true
     }),
     AuthModule
