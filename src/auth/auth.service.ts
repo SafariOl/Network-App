@@ -4,9 +4,9 @@ import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 import * as bcrypt from 'bcrypt';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from 'src/typeorm/entities/User';
+import { User } from 'src/auth/entities/User';
 import { Repository } from 'typeorm';
-import { Token } from 'src/typeorm/entities/Token';
+import { Token } from 'src/auth/entities/Token';
 import { jwtConstants } from './constants';
 
 @Injectable()
@@ -107,8 +107,8 @@ export class AuthService {
     }
 
     async generateTokens(payload) {
-        const accessToken = this.jwtService.sign(payload, { expiresIn: 10 });
-        const refreshToken = this.jwtService.sign(payload, { expiresIn: '30d' });
+        const accessToken = this.jwtService.sign(payload, { expiresIn: '1h' });
+        const refreshToken = this.jwtService.sign(payload, { expiresIn: '3d' });
 
         return {
             accessToken,

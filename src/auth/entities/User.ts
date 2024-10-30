@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Token } from "./Token";
 
 @Entity({name: 'users'})
 export class User {
@@ -16,4 +17,7 @@ export class User {
 
     @Column({ default: false })
     is_activated: boolean;
+
+    @OneToOne(() => Token, token => token.user, {cascade: true})
+    token: Token
 }
