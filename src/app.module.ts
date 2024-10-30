@@ -22,7 +22,7 @@ import { Token } from './typeorm/entities/Token';
       entities: [User, Token],
       synchronize: true
     }),
-    AuthModule
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
