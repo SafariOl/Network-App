@@ -1,4 +1,4 @@
-import { HttpException, Injectable, UnauthorizedException } from '@nestjs/common';
+import { HttpException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
@@ -7,7 +7,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/auth/entities/User';
 import { Repository } from 'typeorm';
 import { Token } from 'src/auth/entities/Token';
-import { jwtConstants } from './constants';
+import { waitForDebugger } from 'inspector';
 
 @Injectable()
 export class AuthService {
@@ -18,6 +18,18 @@ export class AuthService {
         private readonly tokenRepository: Repository<Token>,
         private jwtService: JwtService
     ) {}
+
+    async setLogo(userId:number, img:string) {
+        const user = await this.userRepository.findOneBy({id: userId})
+        if (!user) throw new NotFoundException("user not found")
+        user.logo = img
+        await this.userRepository.save(user)
+        return {message: "logo updated"}
+    }
+
+    async findAll () {
+        return await this.userRepository.find({relations: ['posts']})
+    }
 
     async register(registerDetails: RegisterDto) {
         const user = await this.userRepository.findOneBy({ email: registerDetails.email });

@@ -6,6 +6,12 @@ import { User } from './auth/entities/User';
 import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { Token } from './auth/entities/Token';
+import { PostsModule } from './posts/posts.module';
+import { Post } from './posts/entities/Post';
+import { LikesModule } from './likes/likes.module';
+import { Like } from './likes/entities/Like';
+import { CommentsModule } from './comments/comments.module';
+import { Comment } from './comments/entities/Comment';
 
 @Module({
   imports: [
@@ -19,10 +25,13 @@ import { Token } from './auth/entities/Token';
       username: 'root',
       password: 'Ola__987',
       database: 'network_db',
-      entities: [User, Token],
+      entities: [User, Token, Post, Like, Comment],
       synchronize: true
     }),
     AuthModule,
+    PostsModule,
+    LikesModule,
+    CommentsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

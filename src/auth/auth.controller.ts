@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Request, Response, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, ParseIntPipe, Post, Put, Request, Response, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
@@ -10,6 +10,16 @@ export class AuthController {
     constructor(
         private authService:AuthService
     ){}
+
+    @Get()
+    findAll() {
+        return this.authService.findAll()
+    }
+
+    @Put(':userId')
+    setLogo(@Param('userId', ParseIntPipe) userId:number, @Body() img: string) {
+        return this.authService.setLogo(userId, img)
+    }
 
     @Post('register')
     register(@Body() registerDto: RegisterDto) {
